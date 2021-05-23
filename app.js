@@ -10,6 +10,13 @@ const list = require('./api/list')
 const card = require('./api/card')
 
 const app = express()
+const mongoose = require("mongoose")
+
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost:27017/mastermind",
+  { useNewUrlParser: true, useFindAndModify: false }
+)
+mongoose.set("useCreateIndex", true)
 
 app.use(cors())
 app.use(logger('dev'))
