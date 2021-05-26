@@ -17,3 +17,5 @@ User.deleteMany({}).then(() => {
     console.log("DONE");
     mongoose.connection.close();
 })
+
+
