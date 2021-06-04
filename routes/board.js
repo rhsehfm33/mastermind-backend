@@ -4,7 +4,7 @@ const Board = require('../models/board');
 const List = require('../models/list');
 const Card = require('../models/card');
 
-// create board
+// 보드 생성
 router.post('/', async (req, res, next) => {
   const userId = req.user.id;
   const title = req.body.title;
@@ -15,7 +15,7 @@ router.post('/', async (req, res, next) => {
       userId: userId,
     });
 
-    // default board setting
+    // 기본적인 보드의 리스트 세팅
     const todoList = await List.create({ title: "Todo", pos: 65535, boardId: newBoard.id });
     const doingList = await List.create({ title: "doingList", pos: 65535 * 2, boardId: newBoard.id });
     const doneList = await List.create({ title: "doneList", pos: 65535 * 4, boardId: newBoard.id });
@@ -29,7 +29,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-// get boards about requested user
+// 요청된 사용자에 대한 보드 정보를 응답함
 router.get('/', async (req, res, next) => {
   const userId = req.user.id;
   const list = await Board.find({userId: userId});
@@ -37,7 +37,7 @@ router.get('/', async (req, res, next) => {
 });
 
 
-// get all the information about requested board
+// 요청된 보드에 대한 모든 정보를 응답함
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
   let item = await Board.findById(id);
@@ -52,7 +52,7 @@ router.get('/:id', async (req, res, next) => {
 
   
 
-  // show the list ordered by the position from top to bottom
+  // 리스트를 왼쪽에서부터 오른쪽으로 정렬해 보여주기 위해 사용
   if (item.lists) {
     item.lists.sort((a, b) => a.pos - b.pos)
     item.lists.forEach(list => {
@@ -62,12 +62,10 @@ router.get('/:id', async (req, res, next) => {
     });
   }
 
-  console.log("item log", item);
-
   res.json({ item });
 });
 
-// change the board title
+// 보드 수정(UPDATE)
 router.put('/:id', async (req, res, next) => {
   const { id } = req.params;
   let body = req.body;
@@ -78,7 +76,7 @@ router.put('/:id', async (req, res, next) => {
     return res.status(404).end();
   }
 
-  // change each property of requested board
+  // 각각의 property에 대해서 그 값들을 update함
   Object.keys(body).forEach(key => {
     let value = body[key];
     if (typeof value === 'string') {
@@ -96,7 +94,7 @@ router.put('/:id', async (req, res, next) => {
 });
 
 
-// delete the requested board
+// 요청된 보드를 삭제
 router.delete('/:id', async (req, res, next) => {
   const { id } = req.params;
   await Board.findByIdAndRemove(id);

@@ -6,9 +6,6 @@ const login = async (req, res, next) => {
   
   const user = await User.findOne( { "email" : email, "password" : password} )
 
-  // for debug
-  // console.log(user)
-
   if (!user) {
     return res.status(401).json({ error: 'Login failure' })
   }

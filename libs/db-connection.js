@@ -10,7 +10,8 @@ mongoose.connection
   .once('open', () => console.log('Connected to the database!'))
   .on('error', err => console.log(err));
 
-// to use id instead of _id
+// _id 대신 id를 사용하기 위해 mongoose를 세팅함
+// 이는 프론트의 json data와 맞추기 위함임
 mongoose.set('toJSON', {
   virtuals: true,
   transform: (doc, converted) => {

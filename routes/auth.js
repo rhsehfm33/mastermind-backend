@@ -8,15 +8,12 @@ router.post('/login', async (req, res, next) => {
 
   const user = await User.findOne( { "email" : email, "password" : password} );
 
-  // for debug
-  // console.log(user)
-
-  // when login fail
+  // 로그인 실패시
   if (!user) {
     return res.status(401).json({ error: 'Login failure' });
   }
 
-  // give accessToken when login succeeded
+  // 성공시 accessToken을 응답 객체에 부여해줌
   const accessToken = authService.signToken(user.id);
   res.json({ accessToken, user });
 });
