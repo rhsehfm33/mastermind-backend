@@ -16,4 +16,9 @@ let boardSchema = new Schema({
 	lists: [{ type: Schema.Types.ObjectId, ref: "List" }]
 });
 
+boardSchema.methods.addList = function(list) {
+  this.lists.push(list);
+  return this.save();
+};
+
 module.exports = mongoose.model("Board", boardSchema);

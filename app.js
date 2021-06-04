@@ -24,9 +24,11 @@ app.use(express.static('public'))
 
 const authRoute = require('./routes/auth');
 const boardRoute = require('./routes/board');
+const listRoute = require('./routes/list');
 
 app.use('/', authRoute);
 app.use('/boards', authService.ensureAuth(), boardRoute);
+app.use('/lists', authService.ensureAuth(), listRoute);
 
 // app.post('/boards', authService.ensureAuth(), board.create)
 // app.get('/boards', authService.ensureAuth(), board.query)
