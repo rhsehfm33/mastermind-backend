@@ -68,19 +68,18 @@ router.put('/:id', async (req, res, next) => {
 
 
 // 요청된 리스트 삭제
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
   const { id } = req.params;
   if (!id) {
 		return res.status(400).json({ error: 'no id' });
 	}
 
-	searchedList = await List.findById(id);
-	if (!searchedList) {
+	targetList = await List.findById(id);
+	if (!targetList) {
 		return res.status(404).json({error: 'no list'});
 	}
-	
-	Card.find({ listId: searchedList.id }).remove();
-	searchedList.remove();
+
+	targetList.remove();
 
   res.status(204).end()
 });

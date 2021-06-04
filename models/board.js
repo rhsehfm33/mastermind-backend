@@ -2,6 +2,7 @@
 
 const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
+const List = require('./list');
 
 let boardSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: "User" },
@@ -20,5 +21,12 @@ boardSchema.methods.addList = function(list) {
   this.lists.push(list);
   return this.save();
 };
+
+// 이 보드를 foregin key로 가지고 있는 list 삭제
+boardSchema.pre('remove', function(next) {
+  const targetList = List.find({ boardId: this.id });
+  targetList.remove().exec();
+  next();
+});
 
 module.exports = mongoose.model("Board", boardSchema);

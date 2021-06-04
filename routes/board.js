@@ -97,7 +97,17 @@ router.put('/:id', async (req, res, next) => {
 // 요청된 보드를 삭제
 router.delete('/:id', async (req, res, next) => {
   const { id } = req.params;
-  await Board.findByIdAndRemove(id);
+  if (!id) {
+		return res.status(400).json({ error: 'no id' });
+	}
+
+  targetBoard = await Board.findById(id);
+  if (!targetBoard) {
+    return res.status(404).json({error: 'no board'});
+  }
+
+  targetBoard.remove();
+  
   res.status(204).end();
 });
 
