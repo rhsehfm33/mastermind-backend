@@ -9,14 +9,12 @@ const board = require('./api/board')
 const list = require('./api/list')
 const card = require('./api/card')
 
+// inint app
 const app = express()
-const mongoose = require("mongoose")
-
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost:27017/mastermind",
-  { useNewUrlParser: true, useFindAndModify: false }
-)
-mongoose.set("useCreateIndex", true)
+// define port
+const post = process.env.PORT || 3000;
+// db
+const {MONGO_URL} = require('./libs/db-connection');
 
 app.use(cors())
 app.use(logger('dev'))
@@ -24,7 +22,9 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static('public'))
 
-app.post('/login', auth.login)
+const authRoute = require('./routes/auth');
+
+app.use('/', authRoute);
 
 app.post('/boards', authService.ensureAuth(), board.create)
 app.get('/boards', authService.ensureAuth(), board.query)
