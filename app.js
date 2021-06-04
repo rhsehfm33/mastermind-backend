@@ -23,14 +23,16 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static('public'))
 
 const authRoute = require('./routes/auth');
+const boardRoute = require('./routes/board');
 
 app.use('/', authRoute);
+app.use('/boards', authService.ensureAuth(), boardRoute);
 
-app.post('/boards', authService.ensureAuth(), board.create)
-app.get('/boards', authService.ensureAuth(), board.query)
-app.get('/boards/:id', authService.ensureAuth(), board.get)
-app.put('/boards/:id', authService.ensureAuth(), board.update)
-app.delete('/boards/:id', authService.ensureAuth(), board.destroy)
+// app.post('/boards', authService.ensureAuth(), board.create)
+// app.get('/boards', authService.ensureAuth(), board.query)
+// app.get('/boards/:id', authService.ensureAuth(), board.get)
+// app.put('/boards/:id', authService.ensureAuth(), board.update)
+// app.delete('/boards/:id', authService.ensureAuth(), board.destroy)
 
 // app.get('/lists', authService.ensureAuth(), list.query)
 // app.get('/lists/:id', authService.ensureAuth(), list.get)
