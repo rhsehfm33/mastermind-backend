@@ -17,13 +17,12 @@ router.post('/', async (req, res, next) => {
 	}
 
 	// 카드 생성
-	const card = new Card({
+	const card = await Card.create({
 		title: title,
 		pos: pos,
 		listId: listId,
 		userId: userId
 	});
-	await card.save();
 
 	// 리스트와 연결
 	const list = await List.findById(listId);
@@ -32,11 +31,23 @@ router.post('/', async (req, res, next) => {
 	res.status(201).json({ item: card });
 });
 
+//카드 읽기(READ)
+router.get('/:id', async (req, res, next) => {
+	const { id } = req.params;
+  if (!id) {
+		return res.status(400).json({error: 'no id'});
+	}
+
+  const card = await Card.findById(id);
+
+  res.json({ item: card })
+});
+
 //카드 수정(UPDATE)
 router.put('/:id', async (req, res, next) => {
 	const { id } = req.params;
-	let body = req.body;
-
+	const body = req.body;
+	
 	if (!id) {
 		return res.status(400).json({ error: 'no id' });
 	};
@@ -46,18 +57,28 @@ router.put('/:id', async (req, res, next) => {
 		return res.status(404).json({ error: 'no card' });
 	};
 
+	// 기존에 리스트에 있던 카드 제거
+	const { listId } = await Card.findById(id);
+	const prvList = await List.findById(listId);
+	prvList.cards.pull( { _id: card._id });
+	prvList.save();
+
 	// 각각의 property 에 대해서 그 값들을 udpate함
 	Object.keys(body).forEach(key => {
 		let value = body[key];
 		if (typeof value === 'string') {
 			value = value.trim();
-		};
+		}
 		if (key === 'description' || value) {
 			card[key] = value;
-		};
-	})
+		}
+	});
+	card.save();
 
-	await card.save();
+	// 카드를 넣으려는 리스트에 update한 카드 추가
+	const curList = await List.findById(card.listId);
+	curList.cards.push({ _id: card._id });
+	curList.save();
 
 	res.json({ item: card });
 });

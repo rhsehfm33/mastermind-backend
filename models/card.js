@@ -2,7 +2,7 @@
 
 const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
-const Card = require('./card');
+const List = require('./list');
 
 var cardSchema = new Schema({
   listId: { type: Schema.Types.ObjectId, ref: "List" },
