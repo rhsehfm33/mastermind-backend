@@ -9,11 +9,11 @@ const board = require('./api/board')
 const list = require('./api/list')
 const card = require('./api/card')
 
-// inint app
+// 앱 초기화
 const app = express()
-// define port
+// 포트 정의
 const post = process.env.PORT || 3000;
-// db
+// db 연결
 const {MONGO_URL} = require('./libs/db-connection');
 
 app.use(cors())
@@ -22,12 +22,12 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static('public'))
 
-const authRoute = require('./routes/auth');
+const userRoute = require('./routes/user');
 const boardRoute = require('./routes/board');
 const listRoute = require('./routes/list');
 const cardRoute = require('./routes/card');
 
-app.use('/', authRoute);
+app.use('/', userRoute);
 app.use('/boards', authService.ensureAuth(), boardRoute);
 app.use('/lists', authService.ensureAuth(), listRoute);
 app.use('/cards', authService.ensureAuth(), cardRoute);

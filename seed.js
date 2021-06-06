@@ -1,7 +1,7 @@
 "use strict";
 
-const mongoose = require("mongoose")
-const User = require("./models/user")
+const mongoose = require("mongoose");
+const User = require("./models/user");
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost:27017/mastermind",
   { useNewUrlParser: true, useFindAndModify: false }
