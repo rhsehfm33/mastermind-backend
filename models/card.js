@@ -2,6 +2,7 @@
 
 const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
+const Card = require('./card');
 
 var cardSchema = new Schema({
   listId: { type: Schema.Types.ObjectId, ref: "List" },
@@ -18,3 +19,4 @@ var cardSchema = new Schema({
 });
 
 module.exports = mongoose.model("Card", cardSchema);
+

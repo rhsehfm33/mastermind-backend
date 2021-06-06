@@ -25,10 +25,13 @@ app.use(express.static('public'))
 const authRoute = require('./routes/auth');
 const boardRoute = require('./routes/board');
 const listRoute = require('./routes/list');
+const cardRoute = require('./routes/card');
 
 app.use('/', authRoute);
 app.use('/boards', authService.ensureAuth(), boardRoute);
 app.use('/lists', authService.ensureAuth(), listRoute);
+app.use('/cards', authService.ensureAuth(), cardRoute);
+
 
 // app.post('/boards', authService.ensureAuth(), board.create)
 // app.get('/boards', authService.ensureAuth(), board.query)
@@ -38,15 +41,15 @@ app.use('/lists', authService.ensureAuth(), listRoute);
 
 // app.get('/lists', authService.ensureAuth(), list.query)
 // app.get('/lists/:id', authService.ensureAuth(), list.get)
-app.post('/lists', authService.ensureAuth(), list.create)
-app.put('/lists/:id', authService.ensureAuth(), list.update)
-app.delete('/lists/:id', authService.ensureAuth(), list.destroy)
+// app.post('/lists', authService.ensureAuth(), list.create)
+// app.put('/lists/:id', authService.ensureAuth(), list.update)
+// app.delete('/lists/:id', authService.ensureAuth(), list.destroy)
 
-app.post('/cards', authService.ensureAuth(), card.create)
-// app.get('/cards', authService.ensureAuth(), card.query)
-app.get('/cards/:id', authService.ensureAuth(), card.get)
-app.put('/cards/:id', authService.ensureAuth(), card.update)
-app.delete('/cards/:id', authService.ensureAuth(), card.destroy)
+// app.post('/cards', authService.ensureAuth(), card.create)
+// // app.get('/cards', authService.ensureAuth(), card.query)
+// app.get('/cards/:id', authService.ensureAuth(), card.get)
+// app.put('/cards/:id', authService.ensureAuth(), card.update)
+// app.delete('/cards/:id', authService.ensureAuth(), card.destroy)
 
 const startT = Date.now()
 app.use('/health', (_, res) => res.json({time: Date.now() - startT}))

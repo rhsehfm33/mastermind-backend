@@ -3,6 +3,7 @@
 const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
 const List = require('./list');
+const Card = require('./card');
 
 var listSchema = new Schema({
 	boardId: { type: Schema.Types.ObjectId, ref: "Board" },
@@ -16,7 +17,12 @@ var listSchema = new Schema({
 	cards: [{ type: Schema.Types.ObjectId, ref: "Card" }]
 });
 
-// 이 리스트를 foregin key로 가지고 있는 list 삭제
+listSchema.methods.addCard = function(card) {
+  this.cards.push(card);
+  return this.save();
+};
+
+// 이 리스트를 foregin key로 가지고 있는 card 삭제
 listSchema.pre('remove', function(next) {
   const targetCard = Card.find({ listId: this.id });
   targetCard.remove().exec();
