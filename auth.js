@@ -25,9 +25,9 @@ const auth = {
     }
   },
   verify(token) {
-    console.log("token : ", token)
+    // console.log("token : ", token)
     testToken = token.replace(/^Bearer\s/, '')
-    console.log("testToken : ", testToken)
+    // console.log("testToken : ", testToken)
     return jwt.verify(testToken, secret)
   }
 }

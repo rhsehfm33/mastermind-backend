@@ -24,8 +24,11 @@ boardSchema.methods.addList = function(list) {
 
 // 이 보드를 foregin key로 가지고 있는 list 삭제
 boardSchema.pre('remove', function(next) {
-  const targetList = List.find({ boardId: this.id });
-  targetList.remove().exec();
+  List.find({ boardId: this._id }).then(function(lists) {
+    lists.forEach(function(list) {
+      list.remove();
+    });
+  });
   next();
 });
 

@@ -24,8 +24,7 @@ listSchema.methods.addCard = function(card) {
 
 // 이 리스트를 foregin key로 가지고 있는 card 삭제
 listSchema.pre('remove', function(next) {
-  const targetCard = Card.find({ listId: this.id });
-  targetCard.remove().exec();
+  Card.deleteMany({ listId: this.id }).exec();
   next();
 });
 
