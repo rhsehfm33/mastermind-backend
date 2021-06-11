@@ -12,7 +12,7 @@ let boardSchema = new Schema({
   },
   bgColor: {
     type: String,
-    default: "rgb(0, 121, 191)",
+    default: "rgb(103, 58, 181)",
   },
 	lists: [{ type: Schema.Types.ObjectId, ref: "List" }]
 });
