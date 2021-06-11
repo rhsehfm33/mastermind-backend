@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Board = require("../models/board");
 const List = require("../models/list");
-const Card = require("../models/card");
 
 // 리스트 create
 router.post("/", async (req, res, next) => {
