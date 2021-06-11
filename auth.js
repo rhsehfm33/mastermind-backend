@@ -28,7 +28,9 @@ const auth = {
   },
   // jwt 인증
   verify(token) {
-    return jwt.verify(testToken, secret);
+    // jwt bearer token 을 사용한다고 명시해놓음
+    const realToken = token.replace(/^Bearer\s/, '');
+    return jwt.verify(realToken, secret);
   },
 };
 
