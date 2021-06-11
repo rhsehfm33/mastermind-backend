@@ -7,8 +7,9 @@ const authService = require("../auth");
 router.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email: email });
+  // 해당 email이 없을 시, 에러 메시지를 보냄
   if (!user) {
-    return res.status(401).json({ error: "No such user" });
+    return res.status(401).json({ error: "Login fail" });
   }
 
   // password와 encryptedPassword 같을 시, accessToken 부여
@@ -16,8 +17,15 @@ router.post("/login", async (req, res, next) => {
     if (err) {
       return res.end(err);
     }
-    const accessToken = authService.signToken(user.id);
-    res.json({ accessToken, user });
+    // email, password 일치 시에 accessToken 을 응답객체로 보냄
+    if (isMatch) {
+      const accessToken = authService.signToken(user.id);
+      res.json({ accessToken, user });
+    }
+    // password 불일치시, 에러 메시지를 보냄
+    else {
+      res.status(401).json({ error: "Login fail" });
+    }
   });
 });
 
