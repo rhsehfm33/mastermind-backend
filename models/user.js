@@ -48,6 +48,8 @@ userSchema.pre("save", function (next) {
   });
 });
 
+// request로 받은 사용자의 비밀번호와 실제 그 사용자의 비밀번호가 일치하는지 검사하는 함수
+// 에러가 없으면 그 결과를 isMatch 변수에 반환함
 userSchema.methods.comparePassword = function (candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
     if (err) {
