@@ -23,7 +23,7 @@ const boardRoute = require("./routes/board");
 const listRoute = require("./routes/list");
 const cardRoute = require("./routes/card");
 
-app.use("/", userRoute);
+app.use("/users", userRoute);
 app.use("/boards", authService.ensureAuth(), boardRoute);
 app.use("/lists", authService.ensureAuth(), listRoute);
 app.use("/cards", authService.ensureAuth(), cardRoute);
