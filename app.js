@@ -8,7 +8,7 @@ const authService = require("./auth");
 // 앱 초기화
 const app = express();
 // 포트 정의
-const post = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 // db 연결
 const { MONGO_URL } = require("./libs/db-connection");
 
