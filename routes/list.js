@@ -54,10 +54,9 @@ router.put("/:id", async (req, res, next) => {
     if (typeof value === "string") {
       value = value.trim();
     }
-    if (!value) {
-      return;
+    if (value) {
+      list[key] = value;
     }
-    list[key] = value;
   });
 
   await list.save();

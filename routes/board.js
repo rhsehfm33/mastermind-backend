@@ -92,10 +92,9 @@ router.put("/:id", async (req, res, next) => {
     if (typeof value === "string") {
       value = value.trim();
     }
-    if (!value) {
-      return;
+    if (value) {
+      board[key] = value;
     }
-    board[key] = value;
   });
 
   await board.save();

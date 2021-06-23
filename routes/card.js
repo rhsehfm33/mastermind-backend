@@ -68,7 +68,7 @@ router.put("/:id", async (req, res, next) => {
     if (typeof value === "string") {
       value = value.trim();
     }
-    if (key === "description" || value) {
+    if (value) {
       card[key] = value;
     }
   });
