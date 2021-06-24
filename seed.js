@@ -12,7 +12,7 @@ User.deleteMany({})
     return User.create({
       email: "test@test.com",
       password: "123123",
-      name: "Chris",
+      name: "Jack",
     });
   })
   .then((user) => console.log(user.email))

@@ -30,6 +30,7 @@ router.post("/", async (req, res, next) => {
       pos: 65535 * 4,
       boardId: newBoard.id,
     });
+    
     newBoard.lists.push(todoList, doingList, doneList);
     const saveBoard = await newBoard.save();
 
