@@ -1,21 +1,34 @@
-How to run this project
-1. Install modules
+## About project
+
+### What is this project?
+This project provides schedule management system similar to 'Kanban'.</br>
+First, You have to sign up account and login to use this application.</br>
+After that, you can create your own schedule board.</br>
+You can add 'card' and 'list' in the board for scheduling.
+
+</br>
+
+## How to Deploy
+
+### Build Setup
+1. **Mongo**, **node**, has to be installed in advance to run this application
+2. Install modules
 ```bash
 npm install
 ```
-2. Make database directory here if it doesn't exist
+3. Make database directory if it doesn't in root directory of this project
 ```bash
 mkdir database
 ```
-3. Run mongod (For Windows10)
+4. Run mongod (For Windows10)
 ```bash
 c:\mongodb\bin\mongod --dbpath ./database
 ```
-4. run seed.js
+5. Run seed.js (This is for making basic users of this application)
 ```bash
 node seed
 ```
-5. Start server
+6. Start server
 ```bash
-    npm run dev
+npm run dev
 ```
