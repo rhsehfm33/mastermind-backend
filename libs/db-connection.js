@@ -4,7 +4,15 @@ mongoose.Promise = global.Promise;
 
 const MONGO_URL = db.url;
 
-mongoose.connect(MONGO_URL, { useMongoClient: true });
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost:27017/mastermind",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true
+  }
+);
 
 mongoose.connection
   .once("open", () => console.log("Connected to the database!"))
